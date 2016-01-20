@@ -16,22 +16,27 @@ public class Game : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        //calculate Manhattan Distance
         foreach(Tile tile in openList)
         {
-            if(tile.targetPos.x != tile.transform.position.x)
-            {
-                tile.heuristicValue += Mathf.Abs(tile.targetPos.x - tile.transform.position.x);
-            }
-            if(tile.targetPos.y != tile.transform.position.y)
-            {
-                tile.heuristicValue += Mathf.Abs(tile.targetPos.y - tile.transform.position.y);
-            }
-            else
-            {
-                tile.heuristicValue = 0;
-            }
-            
+            // get the heuristic value for the individual tiles
+            CalculateManhattanDistance(tile);
         }
 	}
+
+    void CalculateManhattanDistance (Tile tile)
+    {
+        // check how far away from the target location the tile is
+        if (tile.targetPos.x != tile.transform.position.x)
+        {
+            tile.heuristicValue += Mathf.Abs(tile.targetPos.x - tile.transform.position.x);
+        }
+        if (tile.targetPos.y != tile.transform.position.y)
+        {
+            tile.heuristicValue += Mathf.Abs(tile.targetPos.y - tile.transform.position.y);
+        }
+        else
+        {
+            tile.heuristicValue = 0;
+        }
+    }
 }
