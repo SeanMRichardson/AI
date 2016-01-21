@@ -23,9 +23,9 @@ public class Game : MonoBehaviour
 	void Start() 
 	{
 		// intialize the board to the end position
-		tile.GetComponent<Tile>().id = 1;
+		tile.GetComponent<Tile>().id = 0;
 		text = tile.transform.FindChild("Text");
-		for (int j = 3; j > 0; --j)
+		for (int j = 2; j >= 0; --j)
 		{
 			for (int i = 0; i < 3; ++i)
 			{
@@ -34,15 +34,16 @@ public class Game : MonoBehaviour
 				tile.GetComponent<Tile>().targetPos.y = j;
 
 				// set the text on the tiles and instantiate
+				tile.GetComponent<Tile>().id++;
 				tileId = tile.GetComponent<Tile>().id;
 				text.GetComponent<Text>().text = tileId.ToString();
 				if (tileId <= puzzleType)
 				{
 					Instantiate(tile, tile.GetComponent<Tile>().targetPos, Quaternion.identity);
+					gameBoard.Add(tile.GetComponent<Tile>());
+					
 				}
-				tile.GetComponent<Tile>().id++;
-
-				gameBoard.Add(tile.GetComponent<Tile>());
+				
 			}
 		}		
 	}
