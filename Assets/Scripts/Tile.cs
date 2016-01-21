@@ -3,20 +3,15 @@ using System.Collections;
 
 public class Tile : MonoBehaviour 
 {
-    public Vector2 targetPos;
+	public Vector2 targetPos;
+	public Vector2 currentPos;
 
-    public float heuristicValue;
-    Game game;
+	public int id = 0;
 
-	// Use this for initialization
-    void Start()
-    {
+	public float heuristicValue;
 
-    }
-	
-	// Update is called once per frame
-	void Update () 
-    {
-
+	void Update()
+	{
+		currentPos = transform.position;
 	}
 }
