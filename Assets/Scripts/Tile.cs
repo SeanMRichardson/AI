@@ -10,6 +10,8 @@ public class Tile : MonoBehaviour
 
 	public float heuristicValue;
 
+	public bool canMove;
+
 	void Update()
 	{
 		currentPos = transform.position;

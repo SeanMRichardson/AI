@@ -5,24 +5,16 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
-
-    Tile[] tiles;
     public GameObject tile;
-
+    public float h;
     public GameObject obj;
-
     public List<Tile> gameBoard = new List<Tile>();
     List<Tile> closeList;
+    public Transform text;
+    public Text hText;
 
     int tileId;
-
-    public Transform text;
-
     int puzzleType = 8;
-
-    public float h;
-
-    bool randomizing = false;
 
     void Start()
     {
@@ -50,7 +42,7 @@ public class Game : MonoBehaviour
                 }
             }
         }
-        RandomizeBoard();
+        //RandomizeBoard();
     }
 
     void Update()
@@ -63,9 +55,13 @@ public class Game : MonoBehaviour
 
             // store the overall heuristic value for the current board
             h += tile.heuristicValue;
+            hText.text = "Manhattan Distance = " + h;
         }
     }
 
+    /// <summary>
+    /// calculates the manhattan distance heuristic
+    /// </summary>
     void CalculateManhattanDistance(Tile tile)
     {
         float hValue = 0;
@@ -78,22 +74,30 @@ public class Game : MonoBehaviour
         }
         if (tile.currentPos.y != tile.targetPos.y)
         {
+            // set the heuristic value
             hValue += Mathf.Abs(tile.targetPos.y - tile.currentPos.y);
             tile.heuristicValue = hValue;
         }
+
+        // if the tiles do match reset the heuristic value
         if (tile.currentPos == tile.targetPos)
         {
             tile.heuristicValue = 0;
         }
     }
 
-    void RandomizeBoard()
+    /// <summary>
+    /// A function which can randomize the position of a tile on a gameboard
+    /// </summary>
+    public void RandomizeBoard()
     {
-        randomizing = true;
-        Vector2[] randomPositions = new Vector2[8];
+        // store the possible positions on the board
         List<Vector2> possiblePositions = new List<Vector2>(9);
 
-
+        // store the random positions on the board
+        Vector2[] randomPositions = new Vector2[8];
+        
+        // add all the possible positions to a list
         for (int j = 0; j < 3; j++)
         {
             for (int i = 0; i < 3; i++)
@@ -102,23 +106,20 @@ public class Game : MonoBehaviour
             }
         }
 
+        // loop through the possible positions
         for (int i = 0; i < 9; i++)
         {
+            //pick a random index
             int x = Random.Range(0, possiblePositions.Count);
+
+            // add the random position to the array
             randomPositions[i] = possiblePositions[x];
+
+            // remove the possible position
             possiblePositions.RemoveAt(x);
+
+            // change position of tile on the board
             gameBoard[i].transform.position = randomPositions[i];
-        }
-
-        // populate array with random positions
-        // check to see if any are the same
-        // if they are change the second one
-
-        //add a random position to an array
-        //generate a new random position
-        //check if the positions are the same as any in the list
-        // if so generate a new position
-
-        
+        }       
     }
 }
