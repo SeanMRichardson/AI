@@ -29,7 +29,7 @@ public class Game : MonoBehaviour
         // intialize the board to the end position
         tile.GetComponent<Tile>().id = 1;
         text = tile.transform.FindChild("Text");
-        for (int j = 3; j >= 1; --j)
+        for (int j = 2; j >= 0; --j)
         {
             for (int i = 0; i < 3; ++i)
             {
@@ -55,10 +55,9 @@ public class Game : MonoBehaviour
 
     void Update()
     {
-
+        h = 0;
         foreach (Tile tile in gameBoard)
         {
-            h = 0;
             // get the heuristic value for the individual tiles
             CalculateManhattanDistance(tile);
 
